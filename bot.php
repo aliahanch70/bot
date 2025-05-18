@@ -6,7 +6,7 @@ $api_url = "https://api.telegram.org/bot$bot_token/";
 
 $input = file_get_contents("php://input");
 $update = json_decode($input, true);
-
+file_put_contents("group-log.txt", $input);
 // شناسه گروه‌هایی که باید پست‌های کانال بهشون بره
 $target_groups = [
     -1001234567890,
