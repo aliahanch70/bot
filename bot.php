@@ -1,12 +1,20 @@
 <?php
 $bot_token = '7458527169:AAHclRKmcrcAD4OSNEJBCM1kP4WvjfXmtCQ'
 $api_url = "https://api.telegram.org/bot$bot_token/";
-
 $input = file_get_contents("php://input");
-error_log("Received update: " . $input);
+$update = json_decode($input, true);
 
-// برای تست پیام ساده به خودت بفرست
-$my_id = 140867059;
-file_get_contents($api_url . "sendMessage?chat_id=$my_id&text=" . urlencode("Got update!"));
+// گروه مقصد
+$target_group = -1002614026667;
 
-echo "ok";
+// فقط وقتی پست از کانال اومده
+if (isset($update["channel_post"])) {
+    $channel_post = $update["channel_post"];
+
+    $text = $channel_post["text"] ?? $channel_post["caption"] ?? null;
+    $channel_chat_id = $channel_post["chat"]["id"];
+    $message_id = $channel_post["message_id"];
+
+    // فوروارد پست به گروه
+    file_get_contents($api_url . "forwardMessage?chat_id=$target_group&from_chat_id=$channel_chat_id&message_id=$message_id");
+}
