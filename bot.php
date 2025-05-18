@@ -7,6 +7,13 @@ $update = json_decode($input, true);
 
 file_put_contents("log.txt", file_get_contents("php://input"));
 
+if (isset($update["message"])) {
+    $chat_id = $update["message"]["chat"]["id"];
+
+    // ارسال پاسخ "سلام"
+    file_get_contents("https://api.telegram.org/bot$token/sendMessage?chat_id=$chat_id&text=سلام 😊");
+}
+
 // شناسه گروه‌هایی که باید پست‌ها بهشون برن
 $target_groups = [
     -1001234567890,  // گروه اول
