@@ -6,7 +6,6 @@ $update = json_decode($input, true);
 
 // گروه مقصد
 $target_group = -1002614026667;
-$input = file_get_contents("php://input");
 file_put_contents("log.txt", $input); // لاگ گرفتن
 // فقط وقتی پست از کانال اومده
 if (isset($update["channel_post"])) {
