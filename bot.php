@@ -7,15 +7,14 @@ $input = file_get_contents("php://input");
 $update = json_decode($input, true);
 
 // ID گروه مقصد (مثلاً -1001234567890)
-$target_group_id = -1001098805559;
+//$target_group_id = -1001098805559;
 
-if (isset($update["channel_post"])) {
-    $channel_post = $update["channel_post"];
 
-    $channel_chat_id = $channel_post["chat"]["id"];
-    $message_id = $channel_post["message_id"];
+// چک کردن اینکه آپدیت از نوع پیام متنی هست یا نه
+if (isset($update["message"])) {
+    $chat_id = $update["message"]["chat"]["id"];
 
-    // فوروارد کردن پیام به گروه
-    file_get_contents($api_url . "forwardMessage?chat_id=$target_group_id&from_chat_id=$channel_chat_id&message_id=$message_id");
+    // ارسال پیام سلام
+    file_get_contents($api_url . "sendMessage?chat_id=$chat_id&text=سلام 🌹");
 }
 ?>
