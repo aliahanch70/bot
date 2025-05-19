@@ -12,9 +12,12 @@ $update = json_decode($input, true);
 
 // چک کردن اینکه آپدیت از نوع پیام متنی هست یا نه
 if (isset($update["message"])) {
-    $chat_id = $update["message"]["chat"]["id"];
+    $chat = $update["message"]["chat"];
 
-    // ارسال پیام سلام
-    file_get_contents($api_url . "sendMessage?chat_id=$chat_id&text=سلام 🌹");
+    // فقط اگر نوع چت "private" بود (یعنی پی‌وی)
+    if ($chat["type"] === "private") {
+        $chat_id = $chat["id"];
+        file_get_contents($api_url . "sendMessage?chat_id=$chat_id&text=سلام 🌹");
+    }
 }
 ?>
