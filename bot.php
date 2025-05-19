@@ -1,23 +1,14 @@
 <?php
-$bot_token = '7160750255:AAGX_9Ullz6Nt0pi_bERyplMqbg_C732F6E'
-$api_url = "https://api.telegram.org/bot$bot_token/";
+//$bot_token = '7160750255:AAGX_9Ullz6Nt0pi_bERyplMqbg_C732F6E'
+$token = "7160750255:AAGX_9Ullz6Nt0pi_bERyplMqbg_C732F6E";
 
+// دریافت داده‌های ارسال‌شده از سمت تلگرام (Webhook)
+$update = json_decode(file_get_contents("php://input"), true);
 
-$input = file_get_contents("php://input");
-$update = json_decode($input, true);
-
-// ID گروه مقصد (مثلاً -1001234567890)
-//$target_group_id = -1001098805559;
-
-
-// چک کردن اینکه آپدیت از نوع پیام متنی هست یا نه
+// بررسی وجود پیام
 if (isset($update["message"])) {
-    $chat = $update["message"]["chat"];
+    $chat_id = $update["message"]["chat"]["id"];
 
-    // فقط اگر نوع چت "private" بود (یعنی پی‌وی)
-    if ($chat["type"] === "private") {
-        $chat_id = $chat["id"];
-        file_get_contents($api_url . "sendMessage?chat_id=$chat_id&text=سلام 🌹");
-    }
+    // ارسال پاسخ "سلام"
+    file_get_contents("https://api.telegram.org/bot$token/sendMessage?chat_id=$chat_id&text=سلام 😊");
 }
-?>
