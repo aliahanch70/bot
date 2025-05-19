@@ -33,12 +33,6 @@ if (isset($update["channel_post"]) && !isset($update["channel_post"]["forward_fr
     }
 }
 
-// پاسخ "سلام" به پیام‌های گروه یا چت خصوصی  خصوصی (اختیاری)
-if (isset($update["message"]) && isset($update["message"]["text"])) {
-    $chat_id = $update["message"]["chat"]["id"];
-    $url = "https://api.telegram.org/bot$token/sendMessage?chat_id=$chat_id&text=" . urlencode("سلام 😊");
-    file_get_contents($url);
-}
 
 // ارسال پاسخ به تلگرام برای تأیید دریافت آپدیت
 http_response_code(200);
