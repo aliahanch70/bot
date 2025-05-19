@@ -1,6 +1,6 @@
 <?php
 $token = "7160750255:AAGX_9Ullz6Nt0pi_bERyplMqbg_C732F6E";
-$target_group_id = "-1002614026667"; // آیدی گروه مقصد
+$target_group_id = "-1001098805559"; // آیدی گروه مقصد
 
 // دریافت داده‌های ارسال‌شده از سمت تلگرام (Webhook)
 $update = json_decode(file_get_contents("php://input"), true);
