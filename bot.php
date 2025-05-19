@@ -5,19 +5,12 @@ $target_group_id = "-1002614026667"; // آیدی گروه مقصد
 // دریافت داده‌های ارسال‌شده از سمت تلگرام (Webhook)
 $update = json_decode(file_get_contents("php://input"), true);
 
-// فوروارد پیام‌های کانال
+// بررسی وجود پیام در کانال
 if (isset($update["channel_post"])) {
     $channel_chat_id = $update["channel_post"]["chat"]["id"];
     $message_id = $update["channel_post"]["message_id"];
 
     // فوروارد پیام به گروه
     $url = "https://api.telegram.org/bot$token/forwardMessage?chat_id=$target_group_id&from_chat_id=$channel_chat_id&message_id=$message_id";
-    file_get_contents($url);
-}
-
-// پاسخ "سلام" به پیام‌های گروه یا چت خصوصی
-if (isset($update["message"]) && isset($update["message"]["text"])) {
-    $chat_id = $update["message"]["chat"]["id"];
-    $url = "https://api.telegram.org/bot$token/sendMessage?chat_id=$chat_id&text=" . urlencode("سلام 😊");
     file_get_contents($url);
 }
