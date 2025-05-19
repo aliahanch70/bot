@@ -1,15 +1,21 @@
 <?php
 $bot_token = '624118292:AAEmRvq0cXiYkcAph79eATfL8qYbdOkxE40'
 $api_url = "https://api.telegram.org/bot$bot_token/";
-$update = json_decode(file_get_contents("php://input"), true);
 
 
-if (isset($update["message"])) {
-    $chat_id = $update["message"]["chat"]["id"];
+$input = file_get_contents("php://input");
+$update = json_decode($input, true);
 
-    // فقط پیام‌های گروه یا سوپرگروه
-    $chat_type = $update["message"]["chat"]["type"];
-    if ($chat_type === "group" || $chat_type === "supergroup") {
-        file_get_contents($api_url . "sendMessage?chat_id=$chat_id&text=سلام 👋");
-    }
+// ID گروه مقصد (مثلاً -1001234567890)
+$target_group_id = -1001098805559;
+
+if (isset($update["channel_post"])) {
+    $channel_post = $update["channel_post"];
+
+    $channel_chat_id = $channel_post["chat"]["id"];
+    $message_id = $channel_post["message_id"];
+
+    // فوروارد کردن پیام به گروه
+    file_get_contents($api_url . "forwardMessage?chat_id=$target_group_id&from_chat_id=$channel_chat_id&message_id=$message_id");
 }
+?>
